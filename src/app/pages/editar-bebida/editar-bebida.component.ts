@@ -4,10 +4,6 @@ import { BebidaService } from '../../services/bebidas.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
-interface Bebida {
-  
-}
-
 @Component({
   standalone: true,
   selector: 'app-editar-bebida',
@@ -16,6 +12,8 @@ interface Bebida {
   imports: [CommonModule, ReactiveFormsModule, FormsModule]
 })
 export class EditarBebidaComponent implements OnInit {
+  
+  //Propiedades
   editarBebidaForm: FormGroup = new FormGroup({});
   enviado: boolean = false;
   bebidaMaeca: string[] = [
@@ -34,12 +32,12 @@ export class EditarBebidaComponent implements OnInit {
 
     const id = this.actRoute.snapshot.paramMap.get('id');
     if (id) {
-      this.getEmpleado(id);
+      this.getBebida(id);
     }
   }
 
   mainForm(): void {
-    this.editarBebidaForm = this.formBuilder.group({
+     this.editarBebidaForm = this.formBuilder.group({
       nombre: ['', Validators.required],
       departamento: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -47,38 +45,43 @@ export class EditarBebidaComponent implements OnInit {
     });
   }
 
-  actualizarDepartamento(event: Event): void {
+  actualizarBebida(event: Event): void {
     const seleccionarElemento = event.target as HTMLSelectElement;
     const departamentoSeleccionado = seleccionarElemento.value;
-    this.editarbebidaForm.get('departamento')?.setValue(departamentoSeleccionado);
+    this.editarBebidaForm.get('departamento')?.setValue(departamentoSeleccionado);
   }
 
   get myForm() {
-    return this.editarbebidaForm.controls;
+    return this.editarBebidaForm.controls;
   }
 
-  getEmpleado(id: string): void {
-    this.empleadoService.getEmpleado(id).subscribe((data) => {
-      this.editarEmpleadoForm.patchValue({
-        nombre: data.nombre,
-        departamento: data.departamento,
-        email: data.email,
-        telefono: data.telefono
-      });
-    });
+  getBebida(id:any){
+    this.BebidaService.getBebida(id).subscribe((data) => {
+      this.editarBebidaForm.setValue({
+        nombre: data['nombre'],
+        tipo: data['tipo'],
+        ingredientes: data['ingredientes'],
+        precio: data['precio'],
+        tamanio: data['tamanio'],
+        calorias: data['calorias'],
+        porcentaje_alcohol: data['porcentaje_alcohol'],
+        nota: data['nota'] || '' // Aseguramos que nota sea un string, incluso si es undefined
+      })
+    })
   }
+  
 
   onSubmit(): void {
     this.enviado = true;
 
-    if (!this.editarEmpleadoForm.valid) {
+    if (!this.editarBebidaForm.valid) {
       return;
     }
 
     if (window.confirm('¿Seguro que desea modificar este usuario?')) {
       const id = this.actRoute.snapshot.paramMap.get('id');
       if (id) {
-        this.empleadoService.actuEmpleado(id, this.editarEmpleadoForm.value).subscribe({
+        this.BebidaService.actualizarBebida(id, this.editarBebidaForm.value).subscribe({
           complete: () => {
             console.log('Empleado modificado correctamente');
             this.router.navigateByUrl('/listar-empleados');
@@ -91,4 +94,3 @@ export class EditarBebidaComponent implements OnInit {
     }
   }
 }
-//password mongoatlas: bwg0AiDEjyeFrkVX

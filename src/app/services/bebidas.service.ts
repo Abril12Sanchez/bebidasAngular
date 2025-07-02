@@ -3,49 +3,50 @@ import { Injectable } from '@angular/core';
 import { map, catchError } from 'rxjs/operators';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 
-interface Bebida {
-}
-
 @Injectable({
   providedIn: 'root'
 })
 export class BebidaService {
-  private readonly baseUri: string = '//http://localhost:4000/api';
-  private readonly headers = new HttpHeaders().set('Content-Type', 'application/json');
 
-  constructor(private http: HttpClient) {}
+  //atributos
+  baseUri: string = '//http://localhost:4000/api';
+  headers = new HttpHeaders().set('Content-Type','application/json');
 
-  agreBebida(data: Bebida): Observable<Bebida> {
-    const url = `${this.baseUri}/agregar`;
-    return this.http.post<Bebida>(url, data, { headers: this.headers })
-      .pipe(catchError(this.errorManager));
+  constructor(private http:HttpClient) { }
+
+  //metodo para agregar las bebidas
+  agregarBebida(data: any):Observable<any> {
+    let url = `${this.baseUri}/agregar`;
+    return this.http.post(url,data).pipe(catchError(this.errorManager))
   }
 
-  getBebida(): Observable<Bebida[]> {
-    const url = `${this.baseUri}/bebida`;
-    return this.http.get<Bebida[]>(url, { headers: this.headers });
+  //metodo para obtener todas las bebidas
+  getBebidas(){
+    let url = `${this.baseUri}/bebidas`;
+    return this.http.get(url);
   }
 
-  getBebida(id: string): Observable<Bebida> {
-    const url = `${this.baseUri}/bebida/${id}`;
-    return this.http.get<Bebida>(url, { headers: this.headers }).pipe(
-      map((res: any) => res || {}),
-      catchError(this.errorManager)
+  //metodo para obtener la bebida por la id
+  getBebida(id:any): Observable<any> {
+    let url = `${this.baseUri}/bebidas/${id}`;
+    return this.http.get(url, {headers: this.headers}).pipe(map((res:any) => {
+      return res || {};
+    }),
+    catchError(this.errorManager)
     );
   }
 
-  actuBebida(id: string, data: Partial<Bebida>): Observable<Bebida> {
-    const url = `${this.baseUri}/actualizar/${id}`;
-    return this.http.put<Bebida>(url, data, { headers: this.headers })
-      .pipe(catchError(this.errorManager));
+  //metodo para actualizar bebidas
+  actualizarBebida(id:any, data:any): Observable<any> {
+    let url = `${this.baseUri}/actualizar/${id}`;
+    return this.http.put(url, data, {headers: this.headers}).pipe(catchError(this.errorManager));
   }
 
-  eliBebida(id: string): Observable<any> {
-    const url = `${this.baseUri}/eliminar/${id}`;
-    return this.http.delete(url, { headers: this.headers })
-      .pipe(catchError(this.errorManager));
+  //metodo para eliminar una bebida
+  eliminarBebida(id:any): Observable<any> {
+    let url = `${this.baseUri}/eliminar/${id}`;
+    return this.http.delete(url, {headers: this.headers}).pipe(catchError(this.errorManager));
   }
-
   private errorManager(error: HttpErrorResponse): Observable<never> {
     let errorMessage = '';
     if (error.error instanceof ErrorEvent) {
