@@ -5,12 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 interface Bebida {
-  id?: string;
-  nombre: string;
-  departamento: string;
-  email: string;
-  telefono: string;
-  puesto: string;
+  
 }
 
 @Component({
@@ -23,12 +18,8 @@ interface Bebida {
 export class EditarBebidaComponent implements OnInit {
   editarBebidaForm: FormGroup = new FormGroup({});
   enviado: boolean = false;
-  empleadoDepartamentos: string[] = [
-    'Administracion',
-    'Contabilidad',
-    'Recursos Humanos',
-    'TI',
-    'Ventas'
+  bebidaMaeca: string[] = [
+
   ];
 
   constructor(
