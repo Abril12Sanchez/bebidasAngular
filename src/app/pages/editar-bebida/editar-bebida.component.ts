@@ -12,10 +12,17 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule, ReactiveFormsModule, FormsModule]
 })
 export class EditarBebidaComponent implements OnInit {
-  
-  //Propiedades
+
+  // Propiedades
   editarBebidaForm: FormGroup = new FormGroup({});
   enviado: boolean = false;
+
+  // Se corrigió el nombre de la propiedad de 'bebidaMaeca' a 'bebidaMarca'
+  bebidaMarca: string[] = [
+    'Coca-Cola',
+    'Pepsi',
+    'Fanta',
+    'Sprite'
   bebidaMarca: string[] = [
 
   ];
@@ -37,7 +44,7 @@ export class EditarBebidaComponent implements OnInit {
   }
 
   mainForm(): void {
-     this.editarBebidaForm = this.formBuilder.group({
+    this.editarBebidaForm = this.formBuilder.group({
       nombre: ['', Validators.required],
       departamento: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -45,7 +52,8 @@ export class EditarBebidaComponent implements OnInit {
     });
   }
 
-  actualizarBebida(event: Event): void {
+  // Se cambió el nombre de la función a "actualizarDepartamento"
+  actualizarDepartamento(event: Event): void {
     const seleccionarElemento = event.target as HTMLSelectElement;
     const departamentoSeleccionado = seleccionarElemento.value;
     this.editarBebidaForm.get('departamento')?.setValue(departamentoSeleccionado);
@@ -55,21 +63,16 @@ export class EditarBebidaComponent implements OnInit {
     return this.editarBebidaForm.controls;
   }
 
-  getBebida(id:any){
+  getBebida(id: any): void {
     this.BebidaService.getBebida(id).subscribe((data) => {
       this.editarBebidaForm.setValue({
         nombre: data['nombre'],
-        tipo: data['tipo'],
-        ingredientes: data['ingredientes'],
-        precio: data['precio'],
-        tamanio: data['tamanio'],
-        calorias: data['calorias'],
-        porcentaje_alcohol: data['porcentaje_alcohol'],
-        nota: data['nota'] || '' // Aseguramos que nota sea un string, incluso si es undefined
-      })
-    })
+        departamento: data['departamento'],
+        email: data['email'],
+        telefono: data['telefono']
+      });
+    });
   }
-  
 
   onSubmit(): void {
     this.enviado = true;
