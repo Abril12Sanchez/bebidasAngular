@@ -1,0 +1,52 @@
+<div class="container" style="margin: 20px;">
+    <h2>Drinks 🍸</h2>
+    @if(listaBebidas.lenght<=0){ <p class="text-center">No hay bebidas registradas.</p>
+        } @else {
+        <table class="table">
+            <thead class="table-dark">
+                <tr> nombre, tipo, ingredientes, precio, tamanio, calorias, imagen, porcentaje_alcohol, nota
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Tipo</th>
+                    <th>Ingredientes</th>
+                    <th>Precio</th>
+                    <td>Tamaño</td>
+                    <td>Calorias</td>
+                    <td>Imagen</td>
+                    <td>Porcentaje Alcohol</td>
+                    <td>Nota</td>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for(bebida of listaBebidas; track bebida._id; let i=$index) {
+                <tr>
+                    <td>{{bebida._id}}</td>
+                    <td>{{bebida.nombre}}</td>
+                    <td>{{bebida.tipo}}</td>
+                    <td>{{bebida.ingredientes}}</td>
+                    <td>{{bebida.precio}}</td>
+                    <td>{{bebida.tamanio}}</td>
+                    <td>{{bebida.calorias}}</td>
+                    <td>
+                        <img [src]="bebida.imagen" alt="Imagen de la bebida" width="50" height="50">
+                    </td>
+                    <td>{{bebida.porcentaje_alcohol}}</td>
+                    <td>{{bebida.nota}}</td>
+                    <td>
+                        <!-- <span [routerLink]="['/editar-empleados', empleado._id]">
+                            <button type="button" class="btn btn-warning btn-sm">Editar</button>
+                        </span> -->
+                        <a [routerLink]="['/editar-bebidas', bebida._id]" class="btn btn-warning btn-sm">
+                            Editar
+                        </a>
+                    </td>
+                    <td>
+                        <a (click)="eliminarBebida(bebida, i)" class="btn btn-danger btn-sm">Eliminar</a>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+        }
+</div>

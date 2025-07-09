@@ -16,7 +16,7 @@ export class EditarBebidaComponent implements OnInit {
   //Propiedades
   editarBebidaForm: FormGroup = new FormGroup({});
   enviado: boolean = false;
-  bebidaMaeca: string[] = [
+  bebidaMarca: string[] = [
 
   ];
 
