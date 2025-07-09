@@ -1,0 +1,91 @@
+<div class="container" style="margin: 20px;">
+    
+    <h2>Editar Bebidas🍻</h2>
+
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+            <div class="card-body">
+
+                <form [formGroup]="editarBebidaForm" (ngSubmit)="onSubmit()">
+
+
+                    <div class="form-group">
+                        <label for="nombre">Nombre</label>
+                        <input type="text" class="form-control" formControlName="nombre" />
+                        <!--Mensaje de error de validación-->
+                        @if(enviado && myForm['nombre'].errors?.['required']) {
+                            <div style="color: red">
+                                Este campo es obligatorio
+                            </div>
+                        }
+                    </div>
+
+                    <br />
+
+                    <div class="form-group">
+                        <label for="departamento">Marca</label>
+                        <select class="custom-select form-control" (change)="actualizarDepartamento($event)" formControlName="departamento">
+
+                            <option value="">Selecciona una marca...</option>
+                            @for(departamento of bebidaMarca; track marca) {
+                                <option value="{{ departamento }}">{{ departamento }}</option>
+                            }
+                        </select>
+                        <!--Mensaje de error de validación-->
+                        @if(enviado && myForm['departamento'].errors?.['required']) {
+                            <div style="color: red">
+                                Debes seleccionar un departamento
+                            </div>
+                        } 
+                    </div>
+
+                    <br />
+
+                    <div class="form-group">
+                        <label for="cantidad">Cantidad</label>
+                        <input type="cantidad" class="form-control" formControlName="cantidad" />
+                        <!--Mensaje de error de validación-->
+                        @if(enviado && myForm['cantidad'].errors?.['required']) {
+                            <div style="color: red">
+                                Este campo es obligatorio
+                            </div>
+                        }
+                        <!--Mensaje de error de validación-->
+                        @if(enviado && myForm['cantidad'].errors?.['pattern']) {
+                            <div style="color: red">
+                                la cantidad no es válido (usuario&#64;dominio.com)
+                            </div>
+                        }
+                    </div>
+
+                    <br />
+
+                    <div class="form-group">
+                        <label for="telefono">Teléfono</label>
+                        <input type="tel" class="form-control" formControlName="telefono" />
+                        <!--Mensaje de error de validación-->
+                        @if(enviado && myForm['telefono'].errors?.['required']) {
+                            <div style="color: red">
+                                Este campo es obligatorio
+                            </div>
+                        }
+                        <!--Mensaje de error de validación-->
+                        @if(enviado && myForm['telefono'].errors?.['pattern']) {
+                            <div style="color: red">
+                                Solo se permiten números (ejemplo: 4271292000)
+                            </div>
+                        }
+                    </div>
+
+                    <br />
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success">
+                            Guardar Cambios 
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
