@@ -9,8 +9,8 @@
             @for(bebida of listaBebidas; track bebida._id; let i=$index) {
             <div class="col-md-4 mb-4">
                 <div class="card h-100 shadow" style="border: none; border-radius: 15px; overflow: hidden;">
-                    <img [src]="bebida.imagen" class="card-img-top" alt="Imagen de la bebida" height="200"
-                        style="object-fit: cover;">
+                    <img [src]="'https://backendbebidas-1.onrender.com' + bebida.imagen" class="card-img-top"
+                        alt="Imagen de la bebida" height="200" style="object-fit: cover;">
                     <div class="card-body" style="background: #fff0f5;">
                         <h5 class="card-title" style="color: #7b4397;">🍹 {{ bebida.nombre }}</h5>
                         <p class="card-text"><strong>Tipo:</strong> {{ bebida.tipo }}</p>

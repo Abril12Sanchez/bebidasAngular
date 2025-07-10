@@ -16,10 +16,15 @@ export class BebidaService {
   constructor(private http:HttpClient) { }
 
   //metodo para agregar las bebidas
-  agregarBebida(data: any):Observable<any> {
-    let url = `${this.baseUri}/agregar`;
-    return this.http.post(url,data).pipe(catchError(this.errorManager))
-  }
+  // agregarBebida(data: any):Observable<any> {
+  //   let url = `${this.baseUri}/agregar`;
+  //   return this.http.post(url,data).pipe(catchError(this.errorManager))
+  // }
+  agregarBebida(data: any): Observable<any> {
+  let url = `${this.baseUri}/agregar`;
+  return this.http.post(url, data).pipe(catchError(this.errorManager)); // NO ENVÍES headers aquí
+}
+
 
   //metodo para obtener todas las bebidas
   getBebidas(){
