@@ -1,11 +1,11 @@
 <div class="container" style="margin: 20px;">
 
-    <h2>Editar Bebida 🍸🍸</h2>
+    <h2>Agregar Bebida 🍸</h2>
 
     <div class="row justify-content-center">
         <div class="col-md-4">
             <div class="card-body">
-                <form [formGroup]="editarBebidaForm" (ngSubmit)="onSubmit()">
+                <form [formGroup]="bebidaForm" (ngSubmit)="onSubmit()">
                     <div class="form-group">
                         <label for="nombre">Nombre: </label>
                         <input type="text" class="form-control" formControlName="nombre"
@@ -20,13 +20,12 @@
                     <br>
                     <div class="form-group">
                         <label for="tipo">Tipo: </label>
-                        <select class="custom-select form-control" (change)="actualizarTipo($event)"
+                        <select class="custom-select form-control" (change)="actualizartipo($event)"
                             formControlName="tipo" title="Seleccione un tipo" required>
                             <option value="">Seleccione un tipo</option>
                             @for(tipo of bebidaTipo; track tipo) {
                             <option [value]="tipo">{{tipo}}</option>
                             }
-
                         </select>
                         <!-- Mensaje de error de validacion -->
                         @if(enviado && myForm['tipo'].errors?.['required']) {
@@ -36,9 +35,10 @@
                         }
                     </div>
                     <br>
+
                     <div class="form-group">
                         <label for="ingredientes">Ingredientes</label>
-                        <input type="ingredientes" class="form-control" formControlName="ingredientes"
+                        <input type="text" class="form-control" formControlName="ingredientes"
                             placeholder="Ingrese los ingredientes" required>
                         <!-- Mensaje de error de validacion -->
                         @if(enviado && myForm['ingredientes'].errors?.['required']) {
@@ -53,6 +53,7 @@
                         }
                     </div>
                     <br>
+
                     <div class="form-group">
                         <label for="precio">Precio: </label>
                         <input type="number" class="form-control" formControlName="precio"
@@ -65,15 +66,16 @@
                         }
                         @if(enviado && myForm['precio'].errors?.['pattern']) {
                         <div class="alert alert-danger">
-                            El tprecio debe de ser un número válido.
+                            Precio no válido. Debe ser un número positivo.
                         </div>
                         }
                     </div>
                     <br>
+
                     <div class="form-group">
                         <label for="tamanio">Tamaño: </label>
                         <input type="text" class="form-control" formControlName="tamanio"
-                            placeholder="Ingrese el tamaño" required>
+                            placeholder="Ingrese el tamaño de la bebida" required>
                         <!-- Mensaje de error de validacion -->
                         @if(enviado && myForm['tamanio'].errors?.['required']) {
                         <div class="alert alert-danger">
@@ -92,32 +94,41 @@
                             Las calorías son obligatorias.
                         </div>
                         }
-                        @if(enviado && myForm['calorias'].errors?.['pattern']) {
+                        @if(enviado && myForm['calorias'].errors?.['min']) {
                         <div class="alert alert-danger">
-                            Las calorías deben ser un número válido.
+                            Las calorías deben ser un número positivo.
+                        </div>
+                        }
+                        @if(enviado && myForm['calorias'].errors?.['max']) {
+                        <div class="alert alert-danger">
+                            Las calorías no pueden exceder 1000.
+                        </div>
+                        }
+                    </div>
+                    <br>
+                    <!-- <div class="form-group">
+                        <label for="imagen">Imagen: </label>
+                        <input type="text" class="form-control" formControlName="imagen"
+                            placeholder="Ingrese la URL de la imagen" required>
+                        @if(enviado && myForm['imagen'].errors?.['required']) {
+                        <div class="alert alert-danger">
+                            La imagen es obligatoria.
+                        </div>
+                        }
+                    </div> -->
+                    <div class="form-group">
+                        <label for="imagen">Imagen: </label>
+                        <input type="file" class="form-control" formControlName="imagen" accept="image/*"
+                            placeholder="imagen" required>
+                        <!-- Mensaje de error de validacion -->
+                        @if(enviado && myForm['imagen'].errors?.['required']) {
+                        <div class="alert alert-danger">
+                            La imagen es obligatoria.
                         </div>
                         }
                     </div>
                     <br>
                     <div class="form-group">
-                        <label for="imagen">Imagen: </label>
-                        <input type="text" class="form-control" formControlName="imagen"
-                            placeholder="Ingrese la URL de la imagen" required>
-                        <!-- Mensaje de error de validacion -->
-                        <!-- @if(enviado && myForm['imagen'].errors?.['required']) {
-                        <div class="alert alert-danger">
-                            La imagen es obligatoria.
-                        </div>
-                        }
-                        @if(enviado && myForm['imagen'].errors?.['pattern']) {
-                        <div class="alert alert-danger">
-                            La imagen debe ser una URL válida.
-                        </div>
-                        } -->
-                    </div>
-                    <br>
-                    <div class="form-group
-">
                         <label for="porcentaje_alcohol">Porcentaje de Alcohol: </label>
                         <input type="number" class="form-control" formControlName="porcentaje_alcohol"
                             placeholder="Ingrese el porcentaje de alcohol" required>
@@ -127,31 +138,49 @@
                             El porcentaje de alcohol es obligatorio.
                         </div>
                         }
-                        @if(enviado && myForm['porcentaje_alcohol'].errors?.['pattern']) {
+                        @if(enviado && myForm['porcentaje_alcohol'].errors?.['min']) {
                         <div class="alert alert-danger">
-                            El porcentaje de alcohol debe ser un número válido.
+                            El porcentaje de alcohol debe ser al menos 0.
                         </div>
                         }
-                    </div>
-                    <br>
-                    <div class="form-group
-">
-                        <label for="nota">Nota: </label>
-                        <input type="text" class="form-control" formControlName="nota"
-                            placeholder="Ingrese una nota opcional">
-                        <!-- Mensaje de error de validacion -->
-                        @if(enviado && myForm['nota'].errors?.['pattern']) {
+                        @if(enviado && myForm['porcentaje_alcohol'].errors?.['max']) {
                         <div class="alert alert-danger">
-                            La nota debe contener solo letras y espacios.
+                            El porcentaje de alcohol no puede exceder 100.
                         </div>
                         }
                     </div>
                     <br>
                     <div class="form-group">
-                        <button type="submit" class="btn btn-success btn-lg btn-block">Guardar Cambios</button>
+                        <label for="nota">Nota: </label>
+                        <textarea class="form-control" formControlName="nota"
+                            placeholder="Ingrese una nota sobre la bebida" required></textarea>
+                        <!-- Mensaje de error de validacion -->
+                        @if(enviado && myForm['nota'].errors?.['required']) {
+                        <div class="alert alert-danger">
+                            La nota es obligatoria.
+                        </div>
+                        }
+                        @if(enviado && myForm['nota'].errors?.['minlength']) {
+                        <div class="alert alert-danger">
+                            La nota debe tener al menos 10 caracteres.
+                        </div>
+                        }
+                        @if(enviado && myForm['nota'].errors?.['maxlength']) {
+                        <div class="alert alert-danger">
+                            La nota no puede exceder los 200 caracteres.
+                        </div>
+                        }
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success btn-lg btn-block">Agregar Empleado</button>
                     </div>
                 </form>
+
+
             </div>
         </div>
+
     </div>
+
 </div>

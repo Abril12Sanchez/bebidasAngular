@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators, ReactiveFormsModule, FormsModule } 
 import { BebidaService } from '../../services/bebidas.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { Bebida } from '../../models/bebida';
 
 @Component({
   standalone: true,
@@ -18,15 +19,32 @@ export class EditarBebidaComponent implements OnInit {
   enviado: boolean = false;
 
   // Se corrigió el nombre de la propiedad de 'bebidaMaeca' a 'bebidaMarca'
-  bebidaMarca: string[] = [
+  bebidaTipo: any=
+  [
     'Coca-Cola',
     'Pepsi',
     'Fanta',
-    'Sprite'
-  bebidaMarca: string[] = [
-
+    'Sprite',
+    'Agua',
+    'Jugo de Naranja',
+    'Jugo de Manzana',
+    'Té Helado',
+    'Cerveza',
+    'Vino',
+    'Whisky',
+    'Ron',
+    'Vodka',
+    'Ginebra',
+    'Tequila',
+    'Bebida Energética',
+    'Limonada',
+    'Batido de Frutas',
+    'Soda',
+    'Limonada con Hierbabuena',
+    'Agua con Gas',
+    'Agua de Coco'
   ];
-
+  bebidaData: Bebida[] = [];
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
@@ -36,7 +54,6 @@ export class EditarBebidaComponent implements OnInit {
 
   ngOnInit(): void {
     this.mainForm();
-
     const id = this.actRoute.snapshot.paramMap.get('id');
     if (id) {
       this.getBebida(id);
@@ -46,17 +63,22 @@ export class EditarBebidaComponent implements OnInit {
   mainForm(): void {
     this.editarBebidaForm = this.formBuilder.group({
       nombre: ['', Validators.required],
-      departamento: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      telefono: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]]
+      tipo: ['', Validators.required],
+      ingredientes: ['', [Validators.required, Validators.pattern('^[a-zA-Z, ]+$')]],
+      precio: ['', [Validators.required, Validators.pattern('^[0-9]+(\\.[0-9]{1,2})?$')]],
+      tamanio: ['', Validators.required],
+      calorias: ['', [Validators.required, Validators.min(0), Validators.max(1000)]],
+      imagen: ['', Validators.required],
+      porcentaje_alcohol: ['', [Validators.required, Validators.min(0), Validators.max(100)]],
+      nota: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(200)]]
     });
   }
 
   // Se cambió el nombre de la función a "actualizarDepartamento"
-  actualizarDepartamento(event: Event): void {
+  actualizarTipo(event: Event): void {
     const seleccionarElemento = event.target as HTMLSelectElement;
-    const departamentoSeleccionado = seleccionarElemento.value;
-    this.editarBebidaForm.get('departamento')?.setValue(departamentoSeleccionado);
+    const tipoSeleccionado = seleccionarElemento.value;
+    this.editarBebidaForm.get('tipo')?.setValue(tipoSeleccionado);
   }
 
   get myForm() {
@@ -67,27 +89,31 @@ export class EditarBebidaComponent implements OnInit {
     this.BebidaService.getBebida(id).subscribe((data) => {
       this.editarBebidaForm.setValue({
         nombre: data['nombre'],
-        departamento: data['departamento'],
-        email: data['email'],
-        telefono: data['telefono']
+        tipo: data['tipo'],
+        ingredientes: data['ingredientes'],
+        precio: data['precio'],
+        tamanio: data['tamanio'],
+        calorias: data['calorias'],
+        imagen: data['imagen'],
+        porcentaje_alcohol: data['porcentaje_alcohol'],
+        nota: data['nota']
       });
     });
   }
 
-  onSubmit(): void {
+  onSubmit() {
     this.enviado = true;
 
     if (!this.editarBebidaForm.valid) {
-      return;
-    }
-
-    if (window.confirm('¿Seguro que desea modificar este usuario?')) {
+      return false;
+    }else {
+    if (window.confirm('¿Seguro que desea modificar esta bebida?')) {
       const id = this.actRoute.snapshot.paramMap.get('id');
       if (id) {
         this.BebidaService.actualizarBebida(id, this.editarBebidaForm.value).subscribe({
           complete: () => {
-            console.log('Empleado modificado correctamente');
-            this.router.navigateByUrl('/listar-empleados');
+            console.log('bebida modificado correctamente');
+            this.router.navigateByUrl('/listar-bebidas');
           },
           error: (e) => {
             console.error('Error al modificar empleado:', e);
@@ -95,5 +121,7 @@ export class EditarBebidaComponent implements OnInit {
         });
       }
     }
+    }
+    return true;
   }
 }

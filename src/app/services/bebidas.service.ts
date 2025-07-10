@@ -9,7 +9,8 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 export class BebidaService {
 
   //atributos
-  baseUri: string = '//http://localhost:4000/api';
+  // baseUri: string = 'http://localhost:4000/api';
+  baseUri: string = 'https://backendbebidas-1.onrender.com/api'; // Cambia esto a tu URL de API real
   headers = new HttpHeaders().set('Content-Type','application/json');
 
   constructor(private http:HttpClient) { }
@@ -28,7 +29,7 @@ export class BebidaService {
 
   //metodo para obtener la bebida por la id
   getBebida(id:any): Observable<any> {
-    let url = `${this.baseUri}/bebidas/${id}`;
+    let url = `${this.baseUri}/bebida/${id}`;
     return this.http.get(url, {headers: this.headers}).pipe(map((res:any) => {
       return res || {};
     }),
