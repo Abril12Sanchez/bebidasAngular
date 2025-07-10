@@ -21,7 +21,8 @@ export class EditarBebidaComponent implements OnInit {
   // Se corrigió el nombre de la propiedad de 'bebidaMaeca' a 'bebidaMarca'
   bebidaTipo: any=
   [
-    'Refrescos y Jugos',
+    'Refrescos',
+    'Jugos',
     'Aguas',
     'Bebidas Alcohólicas',
     'Bebidas Funcionales',

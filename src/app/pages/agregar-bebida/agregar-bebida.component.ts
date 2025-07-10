@@ -17,7 +17,8 @@ export class AgregarBebidaComponent implements OnInit {
   enviado : boolean= false;
    bebidaTipo: any=
   [
-    'Refrescos y Jugos',
+    'Refrescos ',
+    'Jugos',
     'Aguas',
     'Bebidas Alcohólicas',
     'Bebidas Funcionales',
