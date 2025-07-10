@@ -17,29 +17,14 @@ export class AgregarBebidaComponent implements OnInit {
   enviado : boolean= false;
    bebidaTipo: any=
   [
-    'Coca-Cola',
-    'Pepsi',
-    'Fanta',
-    'Sprite',
-    'Agua',
-    'Jugo de Naranja',
-    'Jugo de Manzana',
-    'Té Helado',
-    'Cerveza',
-    'Vino',
-    'Whisky',
-    'Ron',
-    'Vodka',
-    'Ginebra',
-    'Tequila',
-    'Bebida Energética',
-    'Limonada',
-    'Batido de Frutas',
-    'Soda',
-    'Limonada con Hierbabuena',
-    'Agua con Gas',
-    'Agua de Coco',
-    'Coctel'
+    'Refrescos y Jugos',
+    'Aguas',
+    'Bebidas Alcohólicas',
+    'Bebidas Funcionales',
+    'Bebidas Calientes',
+    'Bebidas Internacionales',
+    'Smoothies y Batidos',
+    'Bebidas Tradicionales Mexicanas'
   ];
   // Constructor del componente
   constructor(
