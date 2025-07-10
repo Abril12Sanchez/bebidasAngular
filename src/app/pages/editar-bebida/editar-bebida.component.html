@@ -1,156 +1,128 @@
-<div class="container" style="margin: 20px;">
-
-    <h2>Editar Bebida 🍸🍸</h2>
+<div class="container mt-4">
+    <h2 class="text-center mb-4" style="color: #52804c; font-weight: bold;">
+        Editar Bebida 🍸🍸
+    </h2>
 
     <div class="row justify-content-center">
-        <div class="col-md-4">
-            <div class="card-body">
-                <form [formGroup]="editarBebidaForm" (ngSubmit)="onSubmit()">
-                    <div class="form-group">
-                        <label for="nombre">Nombre: </label>
-                        <input type="text" class="form-control" formControlName="nombre"
-                            placeholder="Ingrese el nombre de la bebida" required>
-                        <!-- Mensaje de error de validacion -->
-                        @if(enviado && myForm['nombre'].errors?.['required']) {
-                        <div class="alert alert-danger">
-                            El nombre es obligatorio.
-                        </div>
-                        }
-                    </div>
-                    <br>
-                    <div class="form-group">
-                        <label for="tipo">Tipo: </label>
-                        <select class="custom-select form-control" (change)="actualizarTipo($event)"
-                            formControlName="tipo" title="Seleccione un tipo" required>
-                            <option value="">Seleccione un tipo</option>
-                            @for(tipo of bebidaTipo; track tipo) {
-                            <option [value]="tipo">{{tipo}}</option>
-                            }
+        <div class="col-md-6">
+            <div class="card shadow-lg" style="border-radius: 15px; background-color: #8fb88960;">
+                <div class="card-body">
+                    <form [formGroup]="editarBebidaForm" (ngSubmit)="onSubmit()">
 
-                        </select>
-                        <!-- Mensaje de error de validacion -->
-                        @if(enviado && myForm['tipo'].errors?.['required']) {
-                        <div class="alert alert-danger">
-                            Debes seleccionar un tipo.
+                        <!-- Nombre -->
+                        <div class="form-group mb-3">
+                            <label class="fw-bold" for="nombre">Nombre:</label>
+                            <input type="text" class="form-control" formControlName="nombre"
+                                placeholder="Ingrese el nombre de la bebida" required>
+                            @if(enviado && myForm['nombre'].errors?.['required']) {
+                            <div class="alert alert-danger mt-2">El nombre es obligatorio.</div>
+                            }
                         </div>
-                        }
-                    </div>
-                    <br>
-                    <div class="form-group">
-                        <label for="ingredientes">Ingredientes</label>
-                        <input type="ingredientes" class="form-control" formControlName="ingredientes"
-                            placeholder="Ingrese los ingredientes" required>
-                        <!-- Mensaje de error de validacion -->
-                        @if(enviado && myForm['ingredientes'].errors?.['required']) {
-                        <div class="alert alert-danger">
-                            Los ingredientes son obligatorios.
+
+                        <!-- Tipo -->
+                        <div class="form-group mb-3">
+                            <label class="fw-bold" for="tipo">Tipo:</label>
+                            <select class="form-control" (change)="actualizarTipo($event)" formControlName="tipo"
+                                title="tipo" required>
+                                <option value="">Seleccione un tipo</option>
+                                @for(tipo of bebidaTipo; track tipo) {
+                                <option [value]="tipo">{{ tipo }}</option>
+                                }
+                            </select>
+                            @if(enviado && myForm['tipo'].errors?.['required']) {
+                            <div class="alert alert-danger mt-2">Debes seleccionar un tipo.</div>
+                            }
                         </div>
-                        }
-                        @if(enviado && myForm['ingredientes'].errors?.['pattern']) {
-                        <div class="alert alert-danger">
-                            Ingredientes no válidos. Deben contener solo letras y comas.
+
+                        <!-- Ingredientes -->
+                        <div class="form-group mb-3">
+                            <label class="fw-bold" for="ingredientes">Ingredientes:</label>
+                            <input type="text" class="form-control" formControlName="ingredientes"
+                                placeholder="Ingrese los ingredientes" required>
+                            @if(enviado && myForm['ingredientes'].errors?.['required']) {
+                            <div class="alert alert-danger mt-2">Los ingredientes son obligatorios.</div>
+                            }
+                            @if(enviado && myForm['ingredientes'].errors?.['pattern']) {
+                            <div class="alert alert-danger mt-2">Deben contener solo letras y comas.</div>
+                            }
                         </div>
-                        }
-                    </div>
-                    <br>
-                    <div class="form-group">
-                        <label for="precio">Precio: </label>
-                        <input type="number" class="form-control" formControlName="precio"
-                            placeholder="Ingrese el precio" required>
-                        <!-- Mensaje de error de validacion -->
-                        @if(enviado && myForm['precio'].errors?.['required']) {
-                        <div class="alert alert-danger">
-                            El precio es obligatorio.
+
+                        <!-- Precio -->
+                        <div class="form-group mb-3">
+                            <label class="fw-bold" for="precio">Precio:</label>
+                            <input type="number" class="form-control" formControlName="precio"
+                                placeholder="Ingrese el precio" required>
+                            @if(enviado && myForm['precio'].errors?.['required']) {
+                            <div class="alert alert-danger mt-2">El precio es obligatorio.</div>
+                            }
+                            @if(enviado && myForm['precio'].errors?.['pattern']) {
+                            <div class="alert alert-danger mt-2">Debe ser un número válido.</div>
+                            }
                         </div>
-                        }
-                        @if(enviado && myForm['precio'].errors?.['pattern']) {
-                        <div class="alert alert-danger">
-                            El tprecio debe de ser un número válido.
+
+                        <!-- Tamaño -->
+                        <div class="form-group mb-3">
+                            <label class="fw-bold" for="tamanio">Tamaño:</label>
+                            <input type="text" class="form-control" formControlName="tamanio"
+                                placeholder="Ingrese el tamaño" required>
+                            @if(enviado && myForm['tamanio'].errors?.['required']) {
+                            <div class="alert alert-danger mt-2">El tamaño es obligatorio.</div>
+                            }
                         </div>
-                        }
-                    </div>
-                    <br>
-                    <div class="form-group">
-                        <label for="tamanio">Tamaño: </label>
-                        <input type="text" class="form-control" formControlName="tamanio"
-                            placeholder="Ingrese el tamaño" required>
-                        <!-- Mensaje de error de validacion -->
-                        @if(enviado && myForm['tamanio'].errors?.['required']) {
-                        <div class="alert alert-danger">
-                            El tamaño es obligatorio.
+
+                        <!-- Calorías -->
+                        <div class="form-group mb-3">
+                            <label class="fw-bold" for="calorias">Calorías:</label>
+                            <input type="number" class="form-control" formControlName="calorias"
+                                placeholder="Ingrese las calorías" required>
+                            @if(enviado && myForm['calorias'].errors?.['required']) {
+                            <div class="alert alert-danger mt-2">Las calorías son obligatorias.</div>
+                            }
+                            @if(enviado && myForm['calorias'].errors?.['pattern']) {
+                            <div class="alert alert-danger mt-2">Deben ser un número válido.</div>
+                            }
                         </div>
-                        }
-                    </div>
-                    <br>
-                    <div class="form-group">
-                        <label for="calorias">Calorías: </label>
-                        <input type="number" class="form-control" formControlName="calorias"
-                            placeholder="Ingrese las calorías" required>
-                        <!-- Mensaje de error de validacion -->
-                        @if(enviado && myForm['calorias'].errors?.['required']) {
-                        <div class="alert alert-danger">
-                            Las calorías son obligatorias.
+
+                        <!-- Imagen -->
+                        <div class="form-group mb-3">
+                            <label class="fw-bold" for="imagen">Imagen:</label>
+                            <input type="text" class="form-control" formControlName="imagen"
+                                placeholder="Ingrese la URL de la imagen" required>
+                            <!-- Validaciones comentadas -->
                         </div>
-                        }
-                        @if(enviado && myForm['calorias'].errors?.['pattern']) {
-                        <div class="alert alert-danger">
-                            Las calorías deben ser un número válido.
+
+                        <!-- Porcentaje de Alcohol -->
+                        <div class="form-group mb-3">
+                            <label class="fw-bold" for="porcentaje_alcohol">Porcentaje de Alcohol:</label>
+                            <input type="number" class="form-control" formControlName="porcentaje_alcohol"
+                                placeholder="Ingrese el porcentaje de alcohol" required>
+                            @if(enviado && myForm['porcentaje_alcohol'].errors?.['required']) {
+                            <div class="alert alert-danger mt-2">El porcentaje es obligatorio.</div>
+                            }
+                            @if(enviado && myForm['porcentaje_alcohol'].errors?.['pattern']) {
+                            <div class="alert alert-danger mt-2">Debe ser un número válido.</div>
+                            }
                         </div>
-                        }
-                    </div>
-                    <br>
-                    <div class="form-group">
-                        <label for="imagen">Imagen: </label>
-                        <input type="text" class="form-control" formControlName="imagen"
-                            placeholder="Ingrese la URL de la imagen" required>
-                        <!-- Mensaje de error de validacion -->
-                        <!-- @if(enviado && myForm['imagen'].errors?.['required']) {
-                        <div class="alert alert-danger">
-                            La imagen es obligatoria.
+
+                        <!-- Nota -->
+                        <div class="form-group mb-4">
+                            <label class="fw-bold" for="nota">Nota:</label>
+                            <input type="text" class="form-control" formControlName="nota"
+                                placeholder="Ingrese una nota opcional">
+                            @if(enviado && myForm['nota'].errors?.['pattern']) {
+                            <div class="alert alert-danger mt-2">La nota debe contener solo letras y espacios.</div>
+                            }
                         </div>
-                        }
-                        @if(enviado && myForm['imagen'].errors?.['pattern']) {
-                        <div class="alert alert-danger">
-                            La imagen debe ser una URL válida.
+
+                        <!-- Botón -->
+                        <div class="form-group text-center">
+                            <button type="submit" class="btn btn-lg" style="background-color: #7b4397; color: white;">
+                                Guardar Cambios 💾
+                            </button>
                         </div>
-                        } -->
-                    </div>
-                    <br>
-                    <div class="form-group
-">
-                        <label for="porcentaje_alcohol">Porcentaje de Alcohol: </label>
-                        <input type="number" class="form-control" formControlName="porcentaje_alcohol"
-                            placeholder="Ingrese el porcentaje de alcohol" required>
-                        <!-- Mensaje de error de validacion -->
-                        @if(enviado && myForm['porcentaje_alcohol'].errors?.['required']) {
-                        <div class="alert alert-danger">
-                            El porcentaje de alcohol es obligatorio.
-                        </div>
-                        }
-                        @if(enviado && myForm['porcentaje_alcohol'].errors?.['pattern']) {
-                        <div class="alert alert-danger">
-                            El porcentaje de alcohol debe ser un número válido.
-                        </div>
-                        }
-                    </div>
-                    <br>
-                    <div class="form-group
-">
-                        <label for="nota">Nota: </label>
-                        <input type="text" class="form-control" formControlName="nota"
-                            placeholder="Ingrese una nota opcional">
-                        <!-- Mensaje de error de validacion -->
-                        @if(enviado && myForm['nota'].errors?.['pattern']) {
-                        <div class="alert alert-danger">
-                            La nota debe contener solo letras y espacios.
-                        </div>
-                        }
-                    </div>
-                    <br>
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-success btn-lg btn-block">Guardar Cambios</button>
-                    </div>
-                </form>
+
+                    </form>
+                </div>
             </div>
         </div>
     </div>

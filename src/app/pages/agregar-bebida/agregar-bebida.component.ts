@@ -38,7 +38,8 @@ export class AgregarBebidaComponent implements OnInit {
     'Soda',
     'Limonada con Hierbabuena',
     'Agua con Gas',
-    'Agua de Coco'
+    'Agua de Coco',
+    'Coctel'
   ];
   // Constructor del componente
   constructor(

@@ -1,27 +1,32 @@
-<div class="container" style="margin: 20px;">
-    <h2>Drinks 🍸</h2>
+<div class="container mt-4">
+    <h2 class="text-center mb-4" style="color: #dc2430; font-weight: bold;">
+        Drinks 🍸
+    </h2>
 
-    @if(listaBebidas.lenght <= 0) { <p class="text-center">No hay bebidas registradas.</p>
+    @if(listaBebidas.lenght <= 0) { <p class="text-center text-muted">No hay bebidas registradas.</p>
         } @else {
         <div class="row">
             @for(bebida of listaBebidas; track bebida._id; let i=$index) {
             <div class="col-md-4 mb-4">
-                <div class="card h-100 shadow-sm">
+                <div class="card h-100 shadow" style="border: none; border-radius: 15px; overflow: hidden;">
                     <img [src]="bebida.imagen" class="card-img-top" alt="Imagen de la bebida" height="200"
                         style="object-fit: cover;">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ bebida.nombre }}</h5>
+                    <div class="card-body" style="background: #fff0f5;">
+                        <h5 class="card-title" style="color: #7b4397;">🍹 {{ bebida.nombre }}</h5>
                         <p class="card-text"><strong>Tipo:</strong> {{ bebida.tipo }}</p>
                         <p class="card-text"><strong>Ingredientes:</strong> {{ bebida.ingredientes }}</p>
-                        <p class="card-text"><strong>Precio:</strong> {{ bebida.precio }}</p>
-                        <p class="card-text"><strong>Tamaño:</strong> {{ bebida.tamanio }}</p>
-                        <p class="card-text"><strong>Calorías:</strong> {{ bebida.calorias }}</p>
+                        <p class="card-text"><strong>Precio:</strong> ${{ bebida.precio }}</p>
+                        <p class="card-text"><strong>Tamaño:</strong> {{ bebida.tamanio }} ml</p>
+                        <p class="card-text"><strong>Calorías:</strong> {{ bebida.calorias }} </p>
                         <p class="card-text"><strong>Alcohol:</strong> {{ bebida.porcentaje_alcohol }}%</p>
                         <p class="card-text"><strong>Nota:</strong> {{ bebida.nota }}</p>
                     </div>
-                    <div class="card-footer d-flex justify-content-between">
-                        <a [routerLink]="['/editar-bebida', bebida._id]" class="btn btn-warning btn-sm">Editar</a>
-                        <a (click)="eliminarBebida(bebida, i)" class="btn btn-danger btn-sm">Eliminar</a>
+                    <div class="card-footer d-flex justify-content-between align-items-center"
+                        style="background: #fce4ec;">
+                        <a [routerLink]="['/editar-bebida', bebida._id]" class="btn btn-sm"
+                            style="background-color: #ffb74d; color: white;">Editar</a>
+                        <a (click)="eliminarBebida(bebida, i)" class="btn btn-sm"
+                            style="background-color: #e57373; color: white;">Eliminar</a>
                     </div>
                 </div>
             </div>

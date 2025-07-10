@@ -1,16 +1,31 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark" data-bs-theme="dark">
+<nav class="navbar navbar-expand-lg navbar-dark" style="background: linear-gradient(90deg, #7b4397, #dc2430);">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">Bebidas</a>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ml-auto">
+    <!-- Logo opcional -->
+    <!-- <img src="assets/logo-bebidas.png" alt="Logo Bebidas" width="40" height="40" class="me-2"> -->
+    <a class="navbar-brand fw-bold fs-4" href="#">
+      🍷 Bebidas Deliciosas
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link" routerLink="active" routerLink="/listar-bebidas">Lista de bebidas</a>
+          <a class="nav-link d-flex align-items-center" routerLink="/listar-bebidas" routerLinkActive="active">
+            🍹 Lista de Bebidas
+          </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="active" routerLink="/agregar-bebida">Agregar bebida</a>
+          <a class="nav-link d-flex align-items-center" routerLink="/agregar-bebida" routerLinkActive="active">
+            🍸 Agregar Bebida
+          </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="active" routerLink="/editar-bebida/_id">Editar de bebida</a>
+          <a class="nav-link d-flex align-items-center" routerLink="/editar-bebida/_id" routerLinkActive="active">
+            🍾 Editar Bebida
+          </a>
         </li>
       </ul>
     </div>
