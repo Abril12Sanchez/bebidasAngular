@@ -43,10 +43,15 @@ export class BebidaService {
   }
 
   //metodo para actualizar bebidas
-  actualizarBebida(id:any, data:any): Observable<any> {
-    let url = `${this.baseUri}/actualizar/${id}`;
-    return this.http.put(url, data, {headers: this.headers}).pipe(catchError(this.errorManager));
-  }
+  // actualizarBebida(id:any, data:any): Observable<any> {
+  //   let url = `${this.baseUri}/actualizar/${id}`;
+  //   return this.http.put(url, data, {headers: this.headers}).pipe(catchError(this.errorManager));
+  // }
+  actualizarBebida(id: any, data: any): Observable<any> {
+  let url = `${this.baseUri}/actualizar/${id}`;
+  return this.http.put(url, data).pipe(catchError(this.errorManager)); // ¡sin headers!
+}
+
 
   //metodo para eliminar una bebida
   eliminarBebida(id:any): Observable<any> {

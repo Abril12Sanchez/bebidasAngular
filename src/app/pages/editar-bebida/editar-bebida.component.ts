@@ -88,27 +88,81 @@ export class EditarBebidaComponent implements OnInit {
     });
   }
 
-  onSubmit() {
-    this.enviado = true;
+  // onSubmit() {
+  //   this.enviado = true;
 
-    if (!this.editarBebidaForm.valid) {
-      return false;
-    }else {
-    if (window.confirm('¿Seguro que desea modificar esta bebida?')) {
-      const id = this.actRoute.snapshot.paramMap.get('id');
-      if (id) {
-        this.BebidaService.actualizarBebida(id, this.editarBebidaForm.value).subscribe({
-          complete: () => {
-            console.log('bebida modificado correctamente');
-            this.router.navigateByUrl('/listar-bebidas');
-          },
-          error: (e) => {
-            console.error('Error al modificar empleado:', e);
-          }
-        });
-      }
-    }
-    }
-    return true;
+  //   if (!this.editarBebidaForm.valid) {
+  //     return false;
+  //   }else {
+  //   if (window.confirm('¿Seguro que desea modificar esta bebida?')) {
+  //     const id = this.actRoute.snapshot.paramMap.get('id');
+  //     if (id) {
+  //       this.BebidaService.actualizarBebida(id, this.editarBebidaForm.value).subscribe({
+  //         complete: () => {
+  //           console.log('bebida modificado correctamente');
+  //           this.router.navigateByUrl('/listar-bebidas');
+  //         },
+  //         error: (e) => {
+  //           console.error('Error al modificar empleado:', e);
+  //         }
+  //       });
+  //     }
+  //   }
+  //   }
+  //   return true;
+  // }
+
+
+  onSubmit() {
+  this.enviado = true;
+
+  if (!this.editarBebidaForm.valid) return false;
+
+  const formData = new FormData();
+  formData.append('nombre', this.editarBebidaForm.get('nombre')?.value);
+  formData.append('tipo', this.editarBebidaForm.get('tipo')?.value);
+  formData.append('ingredientes', this.editarBebidaForm.get('ingredientes')?.value);
+  formData.append('precio', this.editarBebidaForm.get('precio')?.value);
+  formData.append('tamanio', this.editarBebidaForm.get('tamanio')?.value);
+  formData.append('calorias', this.editarBebidaForm.get('calorias')?.value);
+  formData.append('porcentaje_alcohol', this.editarBebidaForm.get('porcentaje_alcohol')?.value);
+  formData.append('nota', this.editarBebidaForm.get('nota')?.value);
+
+  if (this.selectedFile) {
+    formData.append('imagen', this.selectedFile); // archivo
   }
+
+  if (window.confirm('¿Seguro que desea modificar esta bebida?')) {
+    const id = this.actRoute.snapshot.paramMap.get('id');
+    if (id) {
+      this.BebidaService.actualizarBebida(id, formData).subscribe({
+        complete: () => {
+          console.log('Bebida modificada correctamente');
+          this.router.navigateByUrl('/listar-bebidas');
+        },
+        error: (e) => {
+          console.error('Error al modificar la bebida:', e);
+        }
+      });
+    }
+  }
+
+  return true;
+}
+
+
+
+
+  // nuevas
+
+selectedFile: File | null = null;
+
+onFileChange(event: any) {
+  const file = event.target.files[0];
+  if (file) {
+    this.selectedFile = file;
+  }
+}
+
+
 }
